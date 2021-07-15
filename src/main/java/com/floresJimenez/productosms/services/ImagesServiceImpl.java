@@ -28,6 +28,7 @@ public class ImagesServiceImpl implements ImagesService {
     public Image saveImage(String productId, MultipartFile file, Long number) throws Exception {
         Image image = new Image();
         image.setNumberImage(number);
+        image.setProductId(productId);
         image.setFile(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
         image = imagesRepository.insert(image);
         productoService.addImage(productId, image.getId());
@@ -45,6 +46,7 @@ public class ImagesServiceImpl implements ImagesService {
                 imgDto.setId(img.getId());
                 imgDto.setImage(Base64.getEncoder().encodeToString(img.getFile().getData()));
                 imgDto.setNumberImage(img.getNumberImage());
+                imgDto.setProductId(img.getProductId());
                 images.add(imgDto);
             }
         }
